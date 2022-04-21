@@ -1,0 +1,10 @@
+[BASIC]
+
+# Override variable name checks
+good-names = df, X, y, e
+
+# Set line length to match black
+max-line-length = 88
+
+# Disable messages
+disable = wrong-hanging-indentation,bad-whitespace,logging-fstring-interpolation

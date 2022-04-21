@@ -1,0 +1,44 @@
+repos:
+
+  # Some default pre-commit hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.1.0
+    hooks:
+
+    - id: check-yaml
+      name: Check YAML formatting
+
+    - id: mixed-line-ending
+      name: Check line endings
+
+    - id: check-merge-conflict
+      name: Check merge conflicts
+
+  - repo: local
+    hooks:
+
+    # Auto-format with local black
+    - id: black
+      name: Format code using black
+      stages: [commit]
+      language: system
+      entry: python -m black
+      types: [python]
+      files: (^src/|^tests/)
+
+    # Lint with local pylint
+    - id: pylint
+      name: Check code style using pylint
+      language: system
+      stages: [commit]
+      entry: python -m pylint
+      types: [python]
+      files: (^src/)
+
+    # Clear output from Jupyter Notebooks
+    - id: clear-jupyter-output
+      name: Clear output in Jupyter Notebooks
+      stages: [commit]
+      language: system
+      files: \.ipynb$
+      entry: jupyter nbconvert --ClearOutputPreprocessor.enabled=True --inplace

@@ -1,0 +1,2 @@
+# This file installs the package and dependencies by running setup.py
+.

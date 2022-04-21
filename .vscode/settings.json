@@ -1,0 +1,8 @@
+{
+    "files.trimTrailingWhitespace": true,
+    "editor.rulers": [88],
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.formatting.provider": "black",
+    "autoDocstring.docstringFormat": "numpy",
+}

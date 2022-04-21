@@ -1,0 +1,53 @@
+# Trigger on branches
+trigger:
+- master
+
+# Python versions to test
+pool:
+  vmImage: 'ubuntu-latest'
+strategy:
+  matrix:
+    Python39:
+      python.version: '3.9'
+
+steps:
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '$(python.version)'
+  displayName: 'Use Python $(python.version)'
+
+# Install all development dependencies
+- script: |
+    python -m pip install --upgrade pip
+    python -m pip install --upgrade black pylint pytest pytest-cov pytest-azurepipelines
+    python -m pip install .
+  displayName: 'Installing validata package'
+
+# Run auto-formatter on src
+- script: |
+    python -m black src/
+  displayName: 'Running autoformatter black'
+  enabled: true
+  continueOnError: false
+
+# Run linting on src
+- script: |
+    python -m pylint src/
+  displayName: 'Running linting with pylint'
+  enabled: true
+  continueOnError: false
+
+# Run unit tests and compute test coverage
+- script: |
+    python -m pytest --doctest-modules --cov=src/ --cov-report=xml tests/
+  displayName: 'Running tests with pytest'
+  enabled: true
+  continueOnError: false
+
+# Format and publish coverage report
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish Cobertura Coverage Report'
+  inputs:
+    codeCoverageTool: Cobertura
+    summaryFileLocation: '**/coverage.xml'
+    failIfCoverageEmpty: false
