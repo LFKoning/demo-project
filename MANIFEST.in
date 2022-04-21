@@ -1,2 +1,4 @@
 graft src/package_data
+include src/package_data/checks_schema.json
+include src/package_data/variables_to_check.json
 global exclude *.py[cod]
