@@ -52,5 +52,6 @@ setuptools.setup(
     packages=setuptools.find_packages("src"),
     test_suite="tests",
     include_package_data=True,
+    package_data={"demo-project": ["src/package_data/*"]},
     entry_points={"console_scripts": ["dqchecks = demo_project.cli:main"]},
 )
